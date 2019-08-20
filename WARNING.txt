@@ -1,0 +1,5 @@
+Landtory does NOT provide the AdvancedHook which is needed for build Landtory in current code.
+You must to get the AdvancedHook from either LCPDFR, Indicator Mod by G17, or ELS.
+
+This software provided as-is, with no warranty. If you wish to use the "old factor", please come in.
+It will be removed ASAP.
