@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Landtory", "Landtory\Landtory.csproj", "{ED282FFF-66AC-4582-B8CB-15D79BF57E86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeFunctionHook", "NativeFunctionHook\NativeFunctionHook.csproj", "{4268F943-7590-40AD-8BED-72D572EF5B1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Landtory.Engine", "Landtory.Engine\Landtory.Engine.csproj", "{6A27AA90-DCAE-41BF-A69B-252E7E554FC7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED282FFF-66AC-4582-B8CB-15D79BF57E86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED282FFF-66AC-4582-B8CB-15D79BF57E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED282FFF-66AC-4582-B8CB-15D79BF57E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED282FFF-66AC-4582-B8CB-15D79BF57E86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4268F943-7590-40AD-8BED-72D572EF5B1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4268F943-7590-40AD-8BED-72D572EF5B1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4268F943-7590-40AD-8BED-72D572EF5B1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4268F943-7590-40AD-8BED-72D572EF5B1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A27AA90-DCAE-41BF-A69B-252E7E554FC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A27AA90-DCAE-41BF-A69B-252E7E554FC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A27AA90-DCAE-41BF-A69B-252E7E554FC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A27AA90-DCAE-41BF-A69B-252E7E554FC7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

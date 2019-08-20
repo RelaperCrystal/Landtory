@@ -1,0 +1,7 @@
+E:\Users\Administrator\Documents\Visual Studio 2010\Projects\NativeFunctionHook\NativeFunctionHook\bin\Debug\NativeFunctionHook.dll
+E:\Users\Administrator\Documents\Visual Studio 2010\Projects\NativeFunctionHook\NativeFunctionHook\bin\Debug\NativeFunctionHook.pdb
+E:\Users\Administrator\Documents\Visual Studio 2010\Projects\NativeFunctionHook\NativeFunctionHook\bin\Debug\ScriptHookDotNet.dll
+E:\Users\Administrator\Documents\Visual Studio 2010\Projects\NativeFunctionHook\NativeFunctionHook\bin\Debug\ScriptHookDotNet.xml
+E:\Users\Administrator\Documents\Visual Studio 2010\Projects\NativeFunctionHook\NativeFunctionHook\obj\Debug\ResolveAssemblyReference.cache
+E:\Users\Administrator\Documents\Visual Studio 2010\Projects\NativeFunctionHook\NativeFunctionHook\obj\Debug\NativeFunctionHook.dll
+E:\Users\Administrator\Documents\Visual Studio 2010\Projects\NativeFunctionHook\NativeFunctionHook\obj\Debug\NativeFunctionHook.pdb
