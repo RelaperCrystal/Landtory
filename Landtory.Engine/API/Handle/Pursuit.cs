@@ -97,12 +97,13 @@ namespace Landtory.Process
             APed Aofficer = TypeConverter.ConvertToAPed(officer);
             Vehicle copcar = World.CreateVehicle(Model.BasicPoliceCarModel, Plyr.Character.Position.Around(29f));
             AVehicle Acopcar = TypeConverter.ConvertToAVehicle(copcar);
-            Acopcar.AddCopBlip();
-            Acopcar.SetAsPoliceVehicle(true);
+            Blip copBlip = copcar.AttachBlip();
+            copBlip.Color = color;
+            copBlip.Icon = icon;
             copcar.SirenActive = true;
             officer.WarpIntoVehicle(copcar, VehicleSeat.Driver);
             officer.Task.ClearAllImmediately();
-            AttachOfficerInVehicle(officer);
+            AttachOfficerInVehicle(officer, copBlip);
         }
 
         /// <summary>
@@ -127,7 +128,7 @@ namespace Landtory.Process
             officers.Add(officer);
             Aofficers.Add(Aofficer);
         }
-        public void AttachOfficerInVehicle(Ped officer)
+        public void AttachOfficerInVehicle(Ped officer, Blip blip)
         {
             if (officer.Exists() == false)
             {
@@ -142,21 +143,19 @@ namespace Landtory.Process
             APed Aofficer = TypeConverter.ConvertToAPed(officer);
             officer.SayAmbientSpeech("CHASE_SOLO");
             AVehicle car = TypeConverter.ConvertToAVehicle(officer.CurrentVehicle);
-            car.AddCopBlip();
-            car.SetAsPoliceVehicle(true);
+            
             if (target.isInVehicle())
             {
-                Aofficer.TaskCombatPersueInCarSubtask(Atarget);
                 officer.SayAmbientSpeech("PULL_OVER_WARNING");
             }
             else
             {
                 officer.SayAmbientSpeech("MEGAPHONE_FOOT_PURSUIT");
                 officer.Task.LeaveVehicle();
-                Aofficer.TaskCombatBustPed(Atarget);
             }
             officers.Add(officer);
             Aofficers.Add(Aofficer);
+            officerblips.Add(blip);
         }
         public void AttachNooseTeamBackup()
         {
