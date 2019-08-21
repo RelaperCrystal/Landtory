@@ -7,3 +7,5 @@ A starting and simple library provided native functions in common, may moved to 
 **If you have issues, bugs or problems during build, or suggestions for this mod or my poor C# programming or english, please leave an issue, or leave a pull request.** Hovewer, I'm not online at any time.
 
 All the logs required: ScriptHookDotNet.log (finding exceptions), Landtory.log  (Check the stage)
+
+**There's a known issue about arresting script. Please check about `Warning.txt` for more information.**
