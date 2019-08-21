@@ -3,3 +3,6 @@ You must to get the AdvancedHook from either LCPDFR, Indicator Mod by G17, or EL
 
 This software provided as-is, with no warranty. If you wish to use the "old factor", please come in.
 It will be removed ASAP.
+
+
+Theres a known issue that may cause arrest script going to crash. Anyone can make this fixed, please give a pull request.
