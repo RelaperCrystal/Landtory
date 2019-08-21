@@ -92,10 +92,14 @@ namespace Landtory.Process
             }
             if(Exists(Player.LastVehicle))
             {
+                AnimationSet anim = new AnimationSet("busted");
+                AnimationSet anim2 = new AnimationSet("car_bomb");
                 TaskSequence tasks = new TaskSequence();
+                target.DropCurrentWeapon();
                 tasks.AddTask.HandsUp(5000);
-                tasks.AddTask.RunTo(Player.LastVehicle.Position);
-                tasks.AddTask.EnterVehicle(Player.LastVehicle, VehicleSeat.LeftRear);
+                tasks.AddTask.PlayAnimation(anim, "idle_2_hands_up", 1f);
+                tasks.AddTask.PlayAnimation(anim2, "set_car_bomb", 1f);
+                tasks.AddTask.EnterVehicle(Player.LastVehicle, VehicleSeat.RightRear);
                 tasks.Perform(target);
                 ReadyToProceed = true;
                 return;
