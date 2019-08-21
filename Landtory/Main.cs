@@ -60,21 +60,21 @@ namespace Landtory
             if (Exists(Player.Character.CurrentVehicle) == false)
             {
                 logger.Log("Siren without Driver switch failed: No Vehicle", "Main");
-                Functions.PrintSubtitle("~r~You need a vehicle to switch Siren without Driver.");
+                NGame.PrintSubtitle("~r~You need a vehicle to switch Siren without Driver.");
                 return;
             }
             if (SirenDriver)
             {
                 Player.Character.CurrentVehicle.AllowSirenWithoutDriver = false;
                 SirenDriver = false;
-                Functions.PrintSubtitle("Siren Without Driver Off");
+                NGame.PrintSubtitle("Siren Without Driver Off");
                 logger.Log("Siren without Driver OFF", "Main");
             }
             else
             {
                 Player.Character.CurrentVehicle.AllowSirenWithoutDriver = true;
                 SirenDriver = true;
-                Functions.PrintSubtitle("Siren Without Driver On");
+                NGame.PrintSubtitle("Siren Without Driver On");
                 logger.Log("Siren without Driver ON", "Main");
             }
         }

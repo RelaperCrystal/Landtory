@@ -7,6 +7,7 @@ E:\Users\Administrator\Documents\Visual Studio 2010\Projects\NativeFunctionHook\
 E:\Users\Administrator\Documents\Visual Studio 2010\Projects\NativeFunctionHook\NativeFunctionHook\obj\Debug\NativeFunctionHook.pdb
 D:\Projects\Landtory\Landtory\NativeFunctionHook\bin\Debug\NativeFunctionHook.dll
 D:\Projects\Landtory\Landtory\NativeFunctionHook\bin\Debug\NativeFunctionHook.pdb
-D:\Projects\Landtory\Landtory\NativeFunctionHook\obj\Debug\NativeFunctionHook.csprojResolveAssemblyReference.cache
 D:\Projects\Landtory\Landtory\NativeFunctionHook\obj\Debug\NativeFunctionHook.dll
 D:\Projects\Landtory\Landtory\NativeFunctionHook\obj\Debug\NativeFunctionHook.pdb
+D:\Projects\Landtory\Landtory\NativeFunctionHook\bin\Debug\AdvancedHook.dll
+D:\Projects\Landtory\Landtory\NativeFunctionHook\bin\Debug\ScriptHookDotNet.dll

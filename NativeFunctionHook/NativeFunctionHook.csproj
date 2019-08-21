@@ -31,8 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdvancedHook">
+      <HintPath>..\References\AdvancedHook.dll</HintPath>
+    </Reference>
     <Reference Include="ScriptHookDotNet">
-      <HintPath>..\..\..\..\for Developers\bin\ScriptHookDotNet.dll</HintPath>
+      <HintPath>..\References\ScriptHookDotNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
