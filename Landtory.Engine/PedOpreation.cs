@@ -39,7 +39,16 @@ namespace Landtory.Engine
 
         public static void FootOfficerPursuitPed(Ped officer, Ped target)
         {
-
+            // Let's do a quick check before using these
+            if(officer == null || target == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (!officer.Exists() || !target.Exists())
+            {
+                throw new NonExistingObjectException();
+            }
+            
         }
 
         public static void FootOfficerNPCArrestPed(Ped officer, Ped target)

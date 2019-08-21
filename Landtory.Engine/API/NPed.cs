@@ -139,5 +139,14 @@ namespace Landtory.Engine.API
                 isArrested_ = value;
             }
         }
+
+        public GTA.value.PedTasks Tasks
+        {
+            // How i can set the tasks, i wandered
+            get
+            {
+                return GTAPed.Task;
+            }
+        }
     }
 }

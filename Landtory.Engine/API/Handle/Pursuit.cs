@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using GTA;
 using AdvancedHookManaged;
+using Landtory.Engine.API;
+using NativeFunctionHook;
+using Landtory;
+using Landtory.Engine;
+using Landtory.Engine.API.Common;
 
 namespace Landtory.Process
 {
@@ -11,7 +16,11 @@ namespace Landtory.Process
     {
         private Ped target;
         private APed Atarget;
+        private NPed Ntarget;
         private Blip targetB;
+        private List<Blip> officerblips;
+        private BlipIcon icon = BlipIcon.Misc_Waypoint;
+        private BlipColor color = BlipColor.Cyan;
         private List<Ped> officers;
         private List<APed> Aofficers;
         private Player Plyr = Game.LocalPlayer;
@@ -23,6 +32,8 @@ namespace Landtory.Process
             targetB = suspect.AttachBlip();
             targetB.Friendly = false;
             targetB.Name = "Suspect";
+            
+            
             if (target.isInVehicle())
             {
                 target.Task.CruiseWithVehicle(target.CurrentVehicle, 50, false);
@@ -42,7 +53,41 @@ namespace Landtory.Process
         {
             if (target.Exists() == false || target == null)
             {
-                
+                Kill();
+            }
+            if (Ntarget.isArrested)
+            {
+                NGame.PrintSubtitle("Suspect Apprehended!");
+                Kill();
+            }
+            foreach(Ped officer in officers)
+            {
+                if(officer.isInVehicle() && target.isInVehicle())
+                {
+                    officer.Task.DriveTo(target, 30, false);
+                }
+                if(officer.isInVehicle() &&  !target.isInVehicle())
+                {
+                    TaskSequence pursue = new TaskSequence();
+                    pursue.AddTask.LeaveVehicle(officer.CurrentVehicle, false);
+                    pursue.AddTask.RunTo(target.Position);
+                }
+                if(!officer.isInVehicle() && target.isInVehicle())
+                {
+                    officer.Task.EnterVehicle();
+                }
+                if(!officer.isInVehicle() && !target.isInVehicle())
+                {
+                    TaskSequence pursue = new TaskSequence();
+                    pursue.AddTask.RunTo(target.Position);
+                    pursue.AddTask.AimAt(target, -1);
+                    pursue.Perform(officer);
+                    if(officer.Position.DistanceTo(target.Position) < 4.0f)
+                    {
+                        officer.Task.ClearAllImmediately();
+                        PedOpreation.FootOfficerNPCArrestPed(officer, target);
+                    }
+                }
             }
         }
 
@@ -128,11 +173,23 @@ namespace Landtory.Process
         {
             foreach(Ped officer in officers)
             {
+                if (officer == null || officer.Exists() == false) continue;
                 if (officer.isInVehicle())
                 {
-                    officer.Task.ClearAll();
-                    officer.Task.CruiseWithVehicle(officer.CurrentVehicle, 15f, true);
-                    officer.NoLongerNeeded();
+                    if(CommonFunc.GetRandomBool())
+                    {
+                        officer.Task.ClearAll();
+                        officer.Task.CruiseWithVehicle(officer.CurrentVehicle, 15f, true);
+                        officer.NoLongerNeeded();
+                    }
+                    else
+                    {
+                        officer.Task.ClearAll();
+                        officer.Task.LeaveVehicle();
+                        officer.Task.WanderAround();
+                        officer.NoLongerNeeded();
+                    }
+                    
                 }
                 if (officer.isInVehicle() == false)
                 {

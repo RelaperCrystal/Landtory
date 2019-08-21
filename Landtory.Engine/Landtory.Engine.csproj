@@ -60,6 +60,12 @@
     <Compile Include="PedOpreation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NativeFunctionHook\NativeFunctionHook.csproj">
+      <Project>{4268f943-7590-40ad-8bed-72d572ef5b1e}</Project>
+      <Name>NativeFunctionHook</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

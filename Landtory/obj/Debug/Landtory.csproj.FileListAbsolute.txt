@@ -8,3 +8,4 @@ d:\my documents\visual studio 2010\Projects\Landtory\Landtory\obj\Debug\Landtory
 d:\my documents\visual studio 2010\Projects\Landtory\Landtory\obj\Debug\Landtory.pdb
 d:\my documents\visual studio 2010\Projects\Landtory\Landtory\bin\Debug\NativeFunctionHook.dll
 d:\my documents\visual studio 2010\Projects\Landtory\Landtory\bin\Debug\NativeFunctionHook.pdb
+D:\Projects\Landtory\Landtory\Landtory\obj\Debug\Landtory.csprojResolveAssemblyReference.cache
