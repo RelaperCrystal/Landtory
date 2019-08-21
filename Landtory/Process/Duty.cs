@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GTA;
+using NativeFunctionHook;
+using Landtory.Engine.API.Common;
 
 namespace Landtory.Process
 {
@@ -63,7 +65,7 @@ namespace Landtory.Process
             logger.Log("Sending arrest enabled signal", "Duty");
             SendScriptCommand(new Guid("E8450404-F1B8-4505-A3B6-D77B9C9BF933"), "EnableArrest", dutyCar);
 
-            
+            NGame.PrintSubtitle(NLanguage.GetLangStr("OnDutyNow"));
         }
 
         void ConsoleDutyOn(ParameterCollection parameters)

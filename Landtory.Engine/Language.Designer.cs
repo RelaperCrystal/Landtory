@@ -88,6 +88,15 @@ namespace Landtory.Engine {
         }
         
         /// <summary>
+        ///   查找类似 You are now onduty as a police officer. 的本地化字符串。
+        /// </summary>
+        internal static string OnDutyNow {
+            get {
+                return ResourceManager.GetString("OnDutyNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 ~r~You need a vehicle to switch Siren without Driver. 的本地化字符串。
         /// </summary>
         internal static string SirenDriverNoVehicle {

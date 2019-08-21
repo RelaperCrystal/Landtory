@@ -126,6 +126,9 @@
   <data name="OnDuty" xml:space="preserve">
     <value>Welcome to Landtory. Go to Goldberg &amp; Shyster to get on duty.</value>
   </data>
+  <data name="OnDutyNow" xml:space="preserve">
+    <value>You are now onduty as a police officer.</value>
+  </data>
   <data name="SirenDriverNoVehicle" xml:space="preserve">
     <value>~r~You need a vehicle to switch Siren without Driver.</value>
   </data>
