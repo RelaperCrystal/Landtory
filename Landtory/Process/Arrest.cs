@@ -6,6 +6,7 @@ using GTA;
 using AdvancedHookManaged;
 using NativeFunctionHook;
 using Landtory.Engine.API;
+using Landtory.Engine.API.Common;
 
 namespace Landtory.Process
 {
@@ -45,24 +46,18 @@ namespace Landtory.Process
                     suspect.GTAPed.RelationshipGroup = RelationshipGroup.Player;
                 }
         }
-        void ArrestSuspect()
+        void ArrestSuspectRange()
         {
+            Ped target = World.GetClosestPed(Player.Character.Position,5);
             try
             {
                 logger.Log("Starting Arrest");
-
-                if (Player.GetTargetedPed() == null)
-                {
-                    logger.Log("Arrest Failed: Null Argument");
-                    return;
-                }
-
-                if (!Exists(Player.GetTargetedPed()))
+                if (!Exists(target))
                 {
                     logger.Log("Arrest Failed: Suspect does not exist, or not targetting a ped.", "Arrest", Engine.API.Logger.LogLevel.Error);
                     return;
                 }
-                if (Player.GetTargetedPed() == suspect.GTAPed)
+                if (target == suspect.GTAPed)
                 {
                     logger.Log("Arrest Failed: Suspect aleardy apprehended", "Arrest", Engine.API.Logger.LogLevel.Error);
                     NGame.PrintSubtitle("~r~This suspect is aleardy apprehended.");
@@ -77,34 +72,133 @@ namespace Landtory.Process
                 {
                     return;
                 }
-                if (Player.Character.Position.DistanceTo(Player.GetTargetedPed().Position) > 10)
+            }
+            catch (Exception ex)
+            {
+                NGame.PrintSubtitle(NLanguage.GetLangStr("ArrestException"));
+                logger.Log("Exception During Arrest Check: \n" + ex.ToString(), "Arrest", Logger.LogLevel.Error);
+                return;
+            }
+            try
+            {
+                logger.Log("Arrest Check Passed, starting arrest", "Arrest");
+                Random random = new Random();
+                int randomed = random.Next(0, 4);
+                if (randomed == 1)
                 {
-                    logger.Log("Arrest Failed: Out of range", "Arrest", Engine.API.Logger.LogLevel.Error);
-                    AGame.PrintText("You must stand close to suspect to preform an arrest.");
+                    suspect.GTAPed.Weapons.Glock.Ammo = 5000;
+                    suspect.GTAPed.Task.SwapWeapon(Weapon.Handgun_Glock);
+                    suspect.GTAPed.Task.FightAgainst(Player.Character, -1);
+                }
+                suspect = new NPed(target);
+                OnArrest = true;
+                if (target.isInVehicle())
+                {
+                    target.Task.LeaveVehicle();
+                }
+            }
+            catch (Exception ex)
+            {
+                NGame.PrintSubtitle(NLanguage.GetLangStr("ArrestException"));
+                logger.Log("Exception During Arrest Init: \n" + ex.ToString(), "Arrest", Logger.LogLevel.Error);
+                return;
+            }
+            if (Exists(Player.LastVehicle))
+            {
+                try
+                {
+                    AnimationSet anim = new AnimationSet("busted");
+                    AnimationSet anim2 = new AnimationSet("car_bomb");
+                    TaskSequence tasks = new TaskSequence();
+                    if (anim != null && anim2 != null)
+                    {
+                        tasks.AddTask.PlayAnimation(anim, "idle_2_hands_up", 1f);
+                        tasks.AddTask.PlayAnimation(anim2, "set_car_bomb", 1f);
+                        tasks.AddTask.EnterVehicle(World.GetClosestVehicle(Player.Character.Position, 10), VehicleSeat.RightRear);
+                        tasks.Perform(target);
+                        ReadyToProceed = true;
+                        return;
+                    }
+                    else
+                    {
+                        tasks.AddTask.HandsUp(5000);
+                        tasks.AddTask.EnterVehicle(World.GetClosestVehicle(Player.Character.Position, 10), VehicleSeat.RightRear);
+                        tasks.Perform(target);
+                        ReadyToProceed = true;
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    NGame.PrintSubtitle("FATAL Error during arrest");
+                    logger.Log("Arrest suspect error: " + Environment.NewLine + ex.Message + ex.ToString(), "Arrest", Logger.LogLevel.Fatal);
+                }
+            }
+        }
+        void ArrestSuspect()
+        {
+            Ped target = Player.GetTargetedPed();
+            try
+            {
+                logger.Log("Starting Arrest");
+                target = Player.GetTargetedPed();
+                if (target == null)
+                {
+                    logger.Log("Arrest Failed: Null Argument");
+                    return;
+                }
+
+                if (!Exists(target))
+                {
+                    logger.Log("Arrest Failed: Suspect does not exist, or not targetting a ped.", "Arrest", Engine.API.Logger.LogLevel.Error);
+                    return;
+                }
+                if (target == suspect.GTAPed)
+                {
+                    logger.Log("Arrest Failed: Suspect aleardy apprehended", "Arrest", Engine.API.Logger.LogLevel.Error);
+                    NGame.PrintSubtitle("~r~This suspect is aleardy apprehended.");
+                }
+                if (OnArrest == true)
+                {
+                    logger.Log("Arrest Failed: Alerady arresting", "Arrest", Engine.API.Logger.LogLevel.Error);
+                    NGame.PrintSubtitle("~r~You cannot arrest multiple suspect at once.");
+                    return;
+                }
+                if (OnDuty == false)
+                {
                     return;
                 }
             }
             catch(Exception ex)
             {
-                NGame.PrintSubtitle("~r~Failed to arrest suspect.");
-                logger.Log("Exception During Arrest: \n"+ex.ToString(), "Arrest", Logger.LogLevel.Error);
+                NGame.PrintSubtitle(NLanguage.GetLangStr("ArrestException"));
+                logger.Log("Exception During Arrest Check: \n"+ex.ToString(), "Arrest", Logger.LogLevel.Error);
                 return;
             }
-            logger.Log("Arrest Check Passed, starting arrest", "Arrest");
-            Random random = new Random();
-            int randomed = random.Next(0, 4);
-            Ped target = Player.GetTargetedPed();
-            if (randomed == 1)
+            try
             {
-                suspect.GTAPed.Weapons.Glock.Ammo = 5000;
-                suspect.GTAPed.Task.SwapWeapon(Weapon.Handgun_Glock);
-                suspect.GTAPed.Task.FightAgainst(Player.Character, -1);
+                logger.Log("Arrest Check Passed, starting arrest", "Arrest");
+                Random random = new Random();
+                int randomed = random.Next(0, 4);
+                target = Player.GetTargetedPed();
+                if (randomed == 1)
+                {
+                    suspect.GTAPed.Weapons.Glock.Ammo = 5000;
+                    suspect.GTAPed.Task.SwapWeapon(Weapon.Handgun_Glock);
+                    suspect.GTAPed.Task.FightAgainst(Player.Character, -1);
+                }
+                suspect = new NPed(target);
+                OnArrest = true;
+                if (target.isInVehicle())
+                {
+                    target.Task.LeaveVehicle();
+                }
             }
-            suspect = new NPed(target);
-            OnArrest = true;
-            if(target.isInVehicle())
+            catch(Exception ex)
             {
-                target.Task.LeaveVehicle();
+                NGame.PrintSubtitle(NLanguage.GetLangStr("ArrestException"));
+                logger.Log("Exception During Arrest Init: \n" + ex.ToString(), "Arrest", Logger.LogLevel.Error);
+                return;
             }
             if(Exists(Player.LastVehicle))
             {

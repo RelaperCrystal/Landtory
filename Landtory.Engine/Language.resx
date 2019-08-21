@@ -120,6 +120,9 @@
   <data name="Apprehended" xml:space="preserve">
     <value>The suspect was apprehended.</value>
   </data>
+  <data name="ArrestException" xml:space="preserve">
+    <value>~r~Failed to arrest suspect.</value>
+  </data>
   <data name="FailedToArrest" xml:space="preserve">
     <value>~r~Arrest Failed.</value>
   </data>

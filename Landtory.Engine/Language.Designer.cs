@@ -70,6 +70,15 @@ namespace Landtory.Engine {
         }
         
         /// <summary>
+        ///   查找类似 ~r~Failed to arrest suspect. 的本地化字符串。
+        /// </summary>
+        internal static string ArrestException {
+            get {
+                return ResourceManager.GetString("ArrestException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 ~r~Arrest Failed. 的本地化字符串。
         /// </summary>
         internal static string FailedToArrest {
