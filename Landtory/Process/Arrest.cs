@@ -38,7 +38,7 @@ namespace Landtory.Process
                     OnArrest = false;
                     return;
                 }
-                if (ReadyToProceed == true && OnArrest == true && suspect.isInVehicle() && suspect.GTAPed.CurrentVehicle != Player.Character.CurrentVehicle)
+                if (suspect != null && suspect.GTAPed.Exists() && ReadyToProceed == true && OnArrest == true && suspect.isInVehicle() && suspect.GTAPed.CurrentVehicle != Player.Character.CurrentVehicle)
                 {
                     suspect.GTAPed.Task.LeaveVehicle();
                     suspect.GTAPed.RelationshipGroup = RelationshipGroup.Player;
