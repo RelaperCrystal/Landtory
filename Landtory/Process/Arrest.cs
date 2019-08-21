@@ -16,6 +16,7 @@ namespace Landtory.Process
         bool OnArrest;
         bool OnDuty;
         bool ReadyToProceed;
+        Vehicle car;
         public Arrest()
         {
             logger.Log("Initilazing Arrest", "Arrest");
@@ -46,32 +47,47 @@ namespace Landtory.Process
         }
         void ArrestSuspect()
         {
-            logger.Log("Starting Arrest");
-            
-            if (!Exists(Player.GetTargetedPed()))
+            try
             {
-                logger.Log("Arrest Failed: Suspect does not exist, or not targetting a ped.", "Arrest", Engine.API.Logger.LogLevel.Error);
-                return;
+                logger.Log("Starting Arrest");
+
+                if (Player.GetTargetedPed() == null)
+                {
+                    logger.Log("Arrest Failed: Null Argument");
+                    return;
+                }
+
+                if (!Exists(Player.GetTargetedPed()))
+                {
+                    logger.Log("Arrest Failed: Suspect does not exist, or not targetting a ped.", "Arrest", Engine.API.Logger.LogLevel.Error);
+                    return;
+                }
+                if (Player.GetTargetedPed() == suspect.GTAPed)
+                {
+                    logger.Log("Arrest Failed: Suspect aleardy apprehended", "Arrest", Engine.API.Logger.LogLevel.Error);
+                    NGame.PrintSubtitle("~r~This suspect is aleardy apprehended.");
+                }
+                if (OnArrest == true)
+                {
+                    logger.Log("Arrest Failed: Alerady arresting", "Arrest", Engine.API.Logger.LogLevel.Error);
+                    NGame.PrintSubtitle("~r~You cannot arrest multiple suspect at once.");
+                    return;
+                }
+                if (OnDuty == false)
+                {
+                    return;
+                }
+                if (Player.Character.Position.DistanceTo(Player.GetTargetedPed().Position) > 10)
+                {
+                    logger.Log("Arrest Failed: Out of range", "Arrest", Engine.API.Logger.LogLevel.Error);
+                    AGame.PrintText("You must stand close to suspect to preform an arrest.");
+                    return;
+                }
             }
-            if (Player.GetTargetedPed() == suspect.GTAPed)
+            catch(Exception ex)
             {
-                logger.Log("Arrest Failed: Suspect aleardy apprehended", "Arrest", Engine.API.Logger.LogLevel.Error);
-                NGame.PrintSubtitle("~r~This suspect is aleardy apprehended.");
-            }
-            if (OnArrest == true)
-            {
-                logger.Log("Arrest Failed: Alerady arresting", "Arrest", Engine.API.Logger.LogLevel.Error);
-                NGame.PrintSubtitle("~r~You cannot arrest multiple suspect at once.");
-                return;
-            }
-            if (OnDuty == false)
-            {
-                return;
-            }
-            if (Player.Character.Position.DistanceTo(Player.GetTargetedPed().Position) > 10)
-            {
-                logger.Log("Arrest Failed: Out of range", "Arrest", Engine.API.Logger.LogLevel.Error);
-                AGame.PrintText("You must stand close to suspect to preform an arrest.");
+                NGame.PrintSubtitle("~r~Failed to arrest suspect.");
+                logger.Log("Exception During Arrest: \n"+ex.ToString(), "Arrest", Logger.LogLevel.Error);
                 return;
             }
             logger.Log("Arrest Check Passed, starting arrest", "Arrest");
@@ -92,50 +108,83 @@ namespace Landtory.Process
             }
             if(Exists(Player.LastVehicle))
             {
-                AnimationSet anim = new AnimationSet("busted");
-                AnimationSet anim2 = new AnimationSet("car_bomb");
-                TaskSequence tasks = new TaskSequence();
-                target.DropCurrentWeapon();
-                tasks.AddTask.HandsUp(5000);
-                tasks.AddTask.PlayAnimation(anim, "idle_2_hands_up", 1f);
-                tasks.AddTask.PlayAnimation(anim2, "set_car_bomb", 1f);
-                tasks.AddTask.EnterVehicle(Player.LastVehicle, VehicleSeat.RightRear);
-                tasks.Perform(target);
-                ReadyToProceed = true;
-                return;
+                try
+                {
+                    AnimationSet anim = new AnimationSet("busted");
+                    AnimationSet anim2 = new AnimationSet("car_bomb");
+                    TaskSequence tasks = new TaskSequence();
+                    if (anim != null && anim2 != null)
+                    {
+                        tasks.AddTask.PlayAnimation(anim, "idle_2_hands_up", 1f);
+                        tasks.AddTask.PlayAnimation(anim2, "set_car_bomb", 1f);
+                        tasks.AddTask.EnterVehicle(World.GetClosestVehicle(Player.Character.Position, 10), VehicleSeat.RightRear);
+                        tasks.Perform(target);
+                        ReadyToProceed = true;
+                        return;
+                    }
+                    else
+                    {
+                        tasks.AddTask.HandsUp(5000);
+                        tasks.AddTask.EnterVehicle(World.GetClosestVehicle(Player.Character.Position, 10), VehicleSeat.RightRear);
+                        tasks.Perform(target);
+                        ReadyToProceed = true;
+                        return;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    NGame.PrintSubtitle("FATAL Error during arrest");
+                    logger.Log("Arrest suspect error: " + Environment.NewLine + ex.Message + ex.ToString(), "Arrest", Logger.LogLevel.Fatal);
+                }
             }
         }
         void OnDutyEnabled(Script sender, ObjectCollection parameter)
         {
             logger.Log("Arrest enabled signal received", "Arrest");
-
+            
             this.Interval = 100;
         }
         void ProceedArrestedSuspect(Script sender, ObjectCollection parameter)
         {
-            logger.Log("Proceed arrested suspect signal received", "Arrest");
-            if (OnArrest = false || !Exists(suspect))
+            try
             {
-                return;
-            }
-            OnArrest = false;
-            if(suspect.isInVehicle())
-            {
-                suspect.GTAPed.Task.LeaveVehicle();
-            }
+                if (suspect == null)
+                {
+                    logger.Log("Proceed arrest signal invaild", "Arrest", Logger.LogLevel.Warning);
+                    return;
+                }
+                logger.Log("Proceed arrested suspect signal received", "Arrest");
+                if (OnArrest = false || !Exists(suspect))
+                {
+                    return;
+                }
+                OnArrest = false;
+                if (suspect.isInVehicle())
+                {
+                    suspect.GTAPed.Task.LeaveVehicle();
+                }
 
-            for (int num11 = 51; num11 > 1; num11--)
-            {
-                Functions.SetPedAlpha(suspect.GTAPed, num11 * 5);
-                Game.WaitInCurrentScript(10);
+                for (int num11 = 51; num11 > 1; num11--)
+                {
+                    Functions.SetPedAlpha(suspect.GTAPed, num11 * 5);
+                    Game.WaitInCurrentScript(10);
+                }
+                logger.Log("Deleting suspect", "Arrest");
+                Functions.SetPedAlpha(suspect.GTAPed, 0);
+                suspect.GTAPed.NoLongerNeeded();
+                suspect.GTAPed.Delete();
+                suspect = null;
+                logger.Log("Suspect Apprehended", "Arrest");
+                NGame.PrintSubtitle("The suspect was apprehended.");
             }
-            logger.Log("Deleting suspect", "Arrest");
-            Functions.SetPedAlpha(suspect.GTAPed, 0);
-            suspect.GTAPed.NoLongerNeeded();
-            suspect.GTAPed.Delete();
-            suspect = null;
-            logger.Log("Suspect Apprehended", "Arrest");
-            NGame.PrintSubtitle("The suspect was apprehended.");
+            catch(NullReferenceException)
+            {
+                logger.Log("Null Reference Exception reported","Arrest", Logger.LogLevel.Fatal);
+            }
+            catch(NonExistingObjectException)
+            {
+                logger.Log("Non Existing Object Exception reported","Arrest");
+            }
         }
     }
 }

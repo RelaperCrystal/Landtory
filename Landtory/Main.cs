@@ -6,6 +6,7 @@ using System.Drawing;
 using GTA;
 using NativeFunctionHook;
 using AdvancedHookManaged;
+using Landtory.Engine.API.Common;
 
 
 namespace Landtory
@@ -37,7 +38,7 @@ namespace Landtory
                 this.Tick += new EventHandler(Main_Tick);
                 this.BindKey(System.Windows.Forms.Keys.End, SirenSwitchDriver);
                 this.GUID = new Guid("2AA8D642-C91F-4688-A32C-7D27F588014A");
-                AGame.PrintText("Welcome to Landtory. Go to Goldberg & Shyster to get on duty.");
+                AGame.PrintText(NLanguage.GetLangStr("OnDuty"));
             }
             catch (Exception ex)
             {
@@ -60,21 +61,21 @@ namespace Landtory
             if (Exists(Player.Character.CurrentVehicle) == false)
             {
                 logger.Log("Siren without Driver switch failed: No Vehicle", "Main");
-                NGame.PrintSubtitle("~r~You need a vehicle to switch Siren without Driver.");
+                NGame.PrintSubtitle(NLanguage.GetLangStr("SirenDriverNoVehicle"));
                 return;
             }
             if (SirenDriver)
             {
                 Player.Character.CurrentVehicle.AllowSirenWithoutDriver = false;
                 SirenDriver = false;
-                NGame.PrintSubtitle("Siren Without Driver Off");
+                NGame.PrintSubtitle(NLanguage.GetLangStr("SirenWithoutDriverOff"));
                 logger.Log("Siren without Driver OFF", "Main");
             }
             else
             {
                 Player.Character.CurrentVehicle.AllowSirenWithoutDriver = true;
                 SirenDriver = true;
-                NGame.PrintSubtitle("Siren Without Driver On");
+                NGame.PrintSubtitle(NLanguage.GetLangStr("SirenWithoutDriverOn"));
                 logger.Log("Siren without Driver ON", "Main");
             }
         }

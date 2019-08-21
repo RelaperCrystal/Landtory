@@ -48,8 +48,7 @@ namespace Landtory.Process
             logger.Log("Changing Random Cop Model and Relationship", "Duty");
             Player.Model = Model.BasicCopModel;
             Player.Character.RelationshipGroup = RelationshipGroup.Cop;
-            logger.Log("Sending arrest enabled signal", "Duty");
-            SendScriptCommand(new Guid("E8450404-F1B8-4505-A3B6-D77B9C9BF933"), "EnableArrest");
+            
 
             Vector3 CarPosition = new Vector3();
             CarPosition.X = 85.9519f;
@@ -60,6 +59,9 @@ namespace Landtory.Process
             dutyCarBlip.Icon = BlipIcon.Building_Garage;
             // yellow on IV/TLaD, pink on TBoGT
             dutyCarBlip.Color = BlipColor.Yellow;
+
+            logger.Log("Sending arrest enabled signal", "Duty");
+            SendScriptCommand(new Guid("E8450404-F1B8-4505-A3B6-D77B9C9BF933"), "EnableArrest", dutyCar);
 
             
         }
