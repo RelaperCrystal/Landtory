@@ -46,12 +46,19 @@ namespace Landtory.Process
                     suspect.GTAPed.RelationshipGroup = RelationshipGroup.Player;
                 }
         }
+        #region Abondoned Code 1
+        /*
         void ArrestSuspectRange()
         {
             Ped target = World.GetClosestPed(Player.Character.Position,5);
             try
             {
                 logger.Log("Starting Arrest");
+                if (target == null)
+                {
+                    logger.Log("Arrest Failed: Suspect is null", "Arrest", Logger.LogLevel.Error);
+                    return;
+                }
                 if (!Exists(target))
                 {
                     logger.Log("Arrest Failed: Suspect does not exist, or not targetting a ped.", "Arrest", Engine.API.Logger.LogLevel.Error);
@@ -135,6 +142,8 @@ namespace Landtory.Process
                 }
             }
         }
+         */
+        #endregion
         void ArrestSuspect()
         {
             Ped target = Player.GetTargetedPed();
@@ -161,7 +170,7 @@ namespace Landtory.Process
                 if (OnArrest == true)
                 {
                     logger.Log("Arrest Failed: Alerady arresting", "Arrest", Engine.API.Logger.LogLevel.Error);
-                    NGame.PrintSubtitle("~r~You cannot arrest multiple suspect at once.");
+                    NGame.PrintSubtitle(NLanguage.GetLangStr("MultipleSuspectArrestAttmept"));
                     return;
                 }
                 if (OnDuty == false)
@@ -269,7 +278,7 @@ namespace Landtory.Process
                 suspect.GTAPed.Delete();
                 suspect = null;
                 logger.Log("Suspect Apprehended", "Arrest");
-                NGame.PrintSubtitle("The suspect was apprehended.");
+                NGame.PrintSubtitle(NLanguage.GetLangStr("Apprehended"));
             }
             catch(NullReferenceException)
             {

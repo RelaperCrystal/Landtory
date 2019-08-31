@@ -25,5 +25,7 @@ namespace Landtory.Programming
         /// Stop whole world event.
         /// </summary>
         public abstract void Kill();
+
+        public abstract bool CanCreate();
     }
 }

@@ -126,6 +126,12 @@
   <data name="FailedToArrest" xml:space="preserve">
     <value>~r~Arrest Failed.</value>
   </data>
+  <data name="FatalErrorArr" xml:space="preserve">
+    <value>~r~Fatal Error during Arrest.</value>
+  </data>
+  <data name="MultipleSuspectArrestAttmept" xml:space="preserve">
+    <value>~r~You cannot arrest multiple suspect at once.</value>
+  </data>
   <data name="OnDuty" xml:space="preserve">
     <value>Welcome to Landtory. Go to Goldberg &amp; Shyster to get on duty.</value>
   </data>

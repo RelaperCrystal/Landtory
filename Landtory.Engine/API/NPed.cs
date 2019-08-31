@@ -140,6 +140,8 @@ namespace Landtory.Engine.API
             }
         }
 
+        public PersonalInfo info { get; internal set; }
+
         public GTA.value.PedTasks Tasks
         {
             // How i can set the tasks, i wandered

@@ -88,6 +88,24 @@ namespace Landtory.Engine {
         }
         
         /// <summary>
+        ///   查找类似 ~r~Fatal Error during Arrest. 的本地化字符串。
+        /// </summary>
+        internal static string FatalErrorArr {
+            get {
+                return ResourceManager.GetString("FatalErrorArr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 ~r~You cannot arrest multiple suspect at once. 的本地化字符串。
+        /// </summary>
+        internal static string MultipleSuspectArrestAttmept {
+            get {
+                return ResourceManager.GetString("MultipleSuspectArrestAttmept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Welcome to Landtory. Go to Goldberg &amp; Shyster to get on duty. 的本地化字符串。
         /// </summary>
         internal static string OnDuty {
