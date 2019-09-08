@@ -59,6 +59,7 @@ namespace Landtory.Process
             dutyCarBlip.Icon = BlipIcon.Building_Garage;
             // yellow on IV/TLaD, pink on TBoGT
             dutyCarBlip.Color = BlipColor.Yellow;
+            Programming.TransferInfo.CopCar = dutyCar;
 
             logger.Log("Sending arrest enabled signal", "Duty");
             SendScriptCommand(new Guid("E8450404-F1B8-4505-A3B6-D77B9C9BF933"), "EnableArrest", dutyCar);

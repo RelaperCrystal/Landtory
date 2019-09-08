@@ -45,15 +45,26 @@ namespace Landtory.Process
                 suspect.GTAPed.Task.LeaveVehicle();
                 suspect.GTAPed.RelationshipGroup = RelationshipGroup.Player;
             }
-            if (!suspect.GTAPed.isAliveAndWell)
+            try
             {
-                if(PlayAnim)
+                if (OnArrest && !suspect.GTAPed.isAliveAndWell)
                 {
-                    suspect.GTAPed.Delete();
                     OnArrest = false;
                     PlayAnim = false;
                     ReadyToProceed = false;
+                    if (PlayAnim)
+                    {
+                        
+                        suspect.GTAPed.Delete();
+
+                    }
                 }
+            }
+            catch(NonExistingObjectException)
+            {
+                OnArrest = false;
+                PlayAnim = false;
+                ReadyToProceed = false;
             }
         }
         #region Abondoned Code 1
@@ -240,6 +251,7 @@ namespace Landtory.Process
                 OnArrest = true;
                 if (target.isInVehicle())
                 {
+                    Game.LocalPlayer.Character.SayAmbientSpeech("DRAW_GUN");
                     target.Task.LeaveVehicle();
                 }
             }
@@ -255,6 +267,7 @@ namespace Landtory.Process
             {
                 try
                 {
+                    Game.LocalPlayer.Character.SayAmbientSpeech("ARREST_PLAYER");
                     AnimationSet anim = new AnimationSet("busted");
                     AnimationSet anim2 = new AnimationSet("car_bomb");
                     TaskSequence tasks = new TaskSequence();
@@ -271,7 +284,7 @@ namespace Landtory.Process
                     else
                     {
                         tasks.AddTask.HandsUp(5000);
-                        tasks.AddTask.EnterVehicle(World.GetClosestVehicle(Player.Character.Position, 10), VehicleSeat.RightRear);
+                        tasks.AddTask.EnterVehicle(Programming.TransferInfo.CopCar, VehicleSeat.RightRear);
                         tasks.Perform(target);
                         ReadyToProceed = true;
                         return;

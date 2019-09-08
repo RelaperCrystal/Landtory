@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GTA;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,6 @@ namespace Landtory.Programming
     public class TransferInfo
     {
         public static string Render;
+        public static Vehicle CopCar;
     }
 }
