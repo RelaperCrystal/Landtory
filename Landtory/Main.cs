@@ -7,7 +7,8 @@ using GTA;
 using NativeFunctionHook;
 using AdvancedHookManaged;
 using Landtory.Engine.API.Common;
-
+using Landtory.Engine.API.Handle;
+using NativeFunctionHook.value;
 
 namespace Landtory
 {
@@ -15,12 +16,21 @@ namespace Landtory
     {
         bool SirenDriver;
         Checkpoint CheckStation;
+        NArrowCheckpoint CheckArrow;
         Engine.API.Logger logger = new Engine.API.Logger();
+        string InfoDraw;
         public Main()
         {
+            this.GUID = new Guid("2A0A940D-154B-4513-9FB7-7E12DBB4D8B8");
             this.BindKey(System.Windows.Forms.Keys.L, false, false, true, Load_Mod);
+            this.PerFrameDrawing += Main_PerFrameDrawing;
+            this.BindScriptCommand("DrawTargetText", Notified_Render);
         }
 
+        private void Main_PerFrameDrawing(object sender, GraphicsEventArgs e)
+        {
+            e.Graphics.DrawText(InfoDraw, 15, 3, Color.Aqua);
+        }
 
         void Load_Mod()
         {
@@ -31,14 +41,15 @@ namespace Landtory
                 vector.Y = -713.946f;
                 vector.Z = 4.95886f;
                 logger.Log("Initilazing Checkpoint", "Main");
-                CheckStation = new Checkpoint(vector, Color.Yellow, 0.5f);
+                CheckArrow = new NArrowCheckpoint(vector, new RGBColor(255, 215, 0));
 
-                this.Interval = 100;
                 logger.Log("Initilazing Mod Functions", "Main");
-                this.Tick += new EventHandler(Main_Tick);
+                CheckArrow.CheckpointTriggered += new NArrowCheckpoint.CheckpointTriggeredHandler(Main_Tick);
                 this.BindKey(System.Windows.Forms.Keys.End, SirenSwitchDriver);
                 this.GUID = new Guid("2AA8D642-C91F-4688-A32C-7D27F588014A");
-                AGame.PrintText(NLanguage.GetLangStr("OnDuty"));
+                InfoDraw = NLanguage.GetLangStr("OnDuty");
+                Wait(3000);
+                InfoDraw = NLanguage.GetLangStr("NameDraw");
             }
             catch (Exception ex)
             {
@@ -48,12 +59,16 @@ namespace Landtory
         }
         void Main_Tick(object sender, EventArgs e)
         {
-            if (Player.Character.Position.DistanceTo(CheckStation.Position) < 0.5f)
-            {
-                logger.Log("On Duty checkpoint arrived, sending signal", "Main");
-                SendScriptCommand(new Guid("983110F2-7F23-4248-8B5C-315641351FEB"), "ON_DUTY");
-                this.Interval = 0;
-            }
+            logger.Log("On Duty checkpoint arrived, sending signal", "Main");
+            SendScriptCommand(new Guid("983110F2-7F23-4248-8B5C-315641351FEB"), "ON_DUTY");
+            this.Interval = 0;
+        }
+
+        void Notified_Render(Script sender, ObjectCollection parameter)
+        {
+            InfoDraw = Programming.TransferInfo.Render;
+            Wait(3000);
+            InfoDraw = NLanguage.GetLangStr("NameDraw");
         }
 
         void SirenSwitchDriver()

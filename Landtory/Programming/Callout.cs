@@ -12,8 +12,8 @@ namespace Landtory.Programming
         /// Create all the objects.
         /// </summary>
         /// <returns>If false, the callout disregard.</returns>
-        public bool OnCalloutAccepted();
-        public bool OnCalloutWaitingForAccept();
-        public bool OnCalloutCreated();
+        public abstract bool OnCalloutAccepted();
+        public abstract bool OnCalloutWaitingForAccept();
+        public abstract bool OnCalloutCreated();
     }
 }

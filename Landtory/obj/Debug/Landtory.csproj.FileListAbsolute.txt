@@ -8,7 +8,6 @@ d:\my documents\visual studio 2010\Projects\Landtory\Landtory\obj\Debug\Landtory
 d:\my documents\visual studio 2010\Projects\Landtory\Landtory\obj\Debug\Landtory.pdb
 d:\my documents\visual studio 2010\Projects\Landtory\Landtory\bin\Debug\NativeFunctionHook.dll
 d:\my documents\visual studio 2010\Projects\Landtory\Landtory\bin\Debug\NativeFunctionHook.pdb
-D:\Projects\Landtory\Landtory\Landtory\obj\Debug\Landtory.csprojResolveAssemblyReference.cache
 D:\Projects\Landtory\Landtory\Landtory\bin\Debug\Landtory.dll
 D:\Projects\Landtory\Landtory\Landtory\bin\Debug\Landtory.pdb
 D:\Projects\Landtory\Landtory\Landtory\bin\Debug\AdvancedHook.dll
@@ -19,3 +18,6 @@ D:\Projects\Landtory\Landtory\Landtory\bin\Debug\Landtory.Engine.pdb
 D:\Projects\Landtory\Landtory\Landtory\bin\Debug\NativeFunctionHook.pdb
 D:\Projects\Landtory\Landtory\Landtory\obj\Debug\Landtory.dll
 D:\Projects\Landtory\Landtory\Landtory\obj\Debug\Landtory.pdb
+D:\Projects\Landtory\Landtory\Landtory\obj\Debug\Landtory.csprojAssemblyReference.cache
+D:\Projects\Landtory\Landtory\Landtory\obj\Debug\Landtory.csproj.CoreCompileInputs.cache
+D:\Projects\Landtory\Landtory\Landtory\obj\Debug\Landtory.csproj.CopyComplete

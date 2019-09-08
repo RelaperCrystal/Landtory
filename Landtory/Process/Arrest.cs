@@ -33,7 +33,8 @@ namespace Landtory.Process
         {
             if (Exists(Player.GetTargetedPed()) && OnArrest == false)
             {
-                AGame.PrintText("Press ~INPUT_PICKUP~ to arrest the suspect when aiming.");
+                Programming.TransferInfo.Render = "Press ~INPUT_PICKUP~ to arrest the suspect when aiming.";
+                this.SendScriptCommand("2A0A940D-154B-4513-9FB7-7E12DBB4D8B8", "DrawTargetText");
             }
                 if (OnArrest == true && !suspect.GTAPed.Exists() || suspect == null || suspect.isArrested)
                 {

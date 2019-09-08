@@ -6,6 +6,7 @@ using GTA;
 using NativeFunctionHook;
 using Landtory.Engine.API.Common;
 
+
 namespace Landtory.Process
 {
     class Duty : Script

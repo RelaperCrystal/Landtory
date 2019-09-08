@@ -58,6 +58,7 @@
     <Compile Include="API\Common\NLanguage.cs" />
     <Compile Include="API\Common\NSettings.cs" />
     <Compile Include="API\Common\NSettingsManager.cs" />
+    <Compile Include="API\Handle\NArrowCheckpoint.cs" />
     <Compile Include="API\Handle\Pursuit.cs" />
     <Compile Include="API\Logger.cs" />
     <Compile Include="API\NPed.cs" />

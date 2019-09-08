@@ -132,6 +132,9 @@
   <data name="MultipleSuspectArrestAttmept" xml:space="preserve">
     <value>~r~You cannot arrest multiple suspect at once.</value>
   </data>
+  <data name="NameDraw" xml:space="preserve">
+    <value>Landtory mod by RelaperCrystal</value>
+  </data>
   <data name="OnDuty" xml:space="preserve">
     <value>Welcome to Landtory. Go to Goldberg &amp; Shyster to get on duty.</value>
   </data>

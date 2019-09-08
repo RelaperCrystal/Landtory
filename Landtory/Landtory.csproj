@@ -61,6 +61,7 @@
     <Compile Include="Process\Duty.cs" />
     <Compile Include="Process\PersonalInfoManager.cs" />
     <Compile Include="Programming\Callout.cs" />
+    <Compile Include="Programming\TransferInfo.cs" />
     <Compile Include="Programming\WorldEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
