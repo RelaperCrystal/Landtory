@@ -28,7 +28,7 @@ namespace Landtory
 
         private void Main_PerFrameDrawing(object sender, GraphicsEventArgs e)
         {
-            e.Graphics.DrawText(InfoDraw, 15, 3, Color.Aqua);
+            e.Graphics.DrawText(InfoDraw, 200, 3, Color.Aqua);
         }
 
         void Load_Mod()
