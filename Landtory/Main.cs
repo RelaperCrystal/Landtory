@@ -5,7 +5,6 @@ using System.Text;
 using System.Drawing;
 using GTA;
 using NativeFunctionHook;
-using AdvancedHookManaged;
 using Landtory.Engine.API.Common;
 using Landtory.Engine.API.Handle;
 using NativeFunctionHook.value;

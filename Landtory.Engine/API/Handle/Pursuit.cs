@@ -15,20 +15,17 @@ namespace Landtory.Process
     class Pursuit
     {
         private Ped target;
-        private APed Atarget;
         private NPed Ntarget;
         private Blip targetB;
         private List<Blip> officerblips;
         private BlipIcon icon = BlipIcon.Misc_Waypoint;
         private BlipColor color = BlipColor.Cyan;
         private List<Ped> officers;
-        private List<APed> Aofficers;
         private Player Plyr = Game.LocalPlayer;
         private Timer time = new Timer();
         public Pursuit(Ped suspect)
         {
             target = suspect;
-            Atarget = TypeConverter.ConvertToAPed(target);
             targetB = suspect.AttachBlip();
             targetB.Friendly = false;
             targetB.Name = "Suspect";
@@ -94,9 +91,7 @@ namespace Landtory.Process
         public void AttachBackup()
         {
             Ped officer = World.CreatePed(Model.BasicCopModel, Plyr.Character.Position.Around(30f));
-            APed Aofficer = TypeConverter.ConvertToAPed(officer);
             Vehicle copcar = World.CreateVehicle(Model.BasicPoliceCarModel, Plyr.Character.Position.Around(29f));
-            AVehicle Acopcar = TypeConverter.ConvertToAVehicle(copcar);
             Blip copBlip = copcar.AttachBlip();
             copBlip.Color = color;
             copBlip.Icon = icon;
@@ -122,11 +117,8 @@ namespace Landtory.Process
                 throw new ArgumentException("The officer ped you called is in a vehicle.");
             }
             officer.Task.ClearAllImmediately();
-            APed Aofficer = TypeConverter.ConvertToAPed(officer);
             officer.SayAmbientSpeech("CHASE_SOLO");
-            Aofficer.TaskCombatBustPed(Atarget);
             officers.Add(officer);
-            Aofficers.Add(Aofficer);
         }
         public void AttachOfficerInVehicle(Ped officer, Blip blip)
         {
@@ -140,9 +132,7 @@ namespace Landtory.Process
             }
             officer.Task.ClearAllImmediately();
             officer.CurrentVehicle.SirenActive = true;
-            APed Aofficer = TypeConverter.ConvertToAPed(officer);
             officer.SayAmbientSpeech("CHASE_SOLO");
-            AVehicle car = TypeConverter.ConvertToAVehicle(officer.CurrentVehicle);
             
             if (target.isInVehicle())
             {
@@ -154,7 +144,6 @@ namespace Landtory.Process
                 officer.Task.LeaveVehicle();
             }
             officers.Add(officer);
-            Aofficers.Add(Aofficer);
             officerblips.Add(blip);
         }
         public void AttachNooseTeamBackup()

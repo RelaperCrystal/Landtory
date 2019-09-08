@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GTA;
-using AdvancedHookManaged;
 using NativeFunctionHook;
 using Landtory.Engine.API;
 using Landtory.Engine.API.Common;
