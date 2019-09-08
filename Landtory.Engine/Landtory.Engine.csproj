@@ -34,6 +34,10 @@
     <Reference Include="AdvancedHook">
       <HintPath>E:\Kuai8Games\Games\GrandTheftAutoIV\AdvancedHook.dll</HintPath>
     </Reference>
+    <Reference Include="NativeFunctionHook, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\NativeFunctionHook\bin\Debug\NativeFunctionHook.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>E:\Kuai8Games\Games\GTA4EFLC\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -65,12 +69,6 @@
     </Compile>
     <Compile Include="PedOpreation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NativeFunctionHook\NativeFunctionHook.csproj">
-      <Project>{4268f943-7590-40ad-8bed-72d572ef5b1e}</Project>
-      <Name>NativeFunctionHook</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Language.resx">

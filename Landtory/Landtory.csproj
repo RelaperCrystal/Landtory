@@ -37,6 +37,10 @@
     <Reference Include="AdvancedHook">
       <HintPath>..\References\AdvancedHook.dll</HintPath>
     </Reference>
+    <Reference Include="NativeFunctionHook, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\NativeFunctionHook\bin\Debug\NativeFunctionHook.dll</HintPath>
+    </Reference>
     <Reference Include="ScriptHookDotNet">
       <HintPath>..\..\..\LCPDFR\HighHotCallouts\API Example\References\ScriptHookDotNet.dll</HintPath>
     </Reference>
@@ -68,10 +72,6 @@
     <ProjectReference Include="..\Landtory.Engine\Landtory.Engine.csproj">
       <Project>{6A27AA90-DCAE-41BF-A69B-252E7E554FC7}</Project>
       <Name>Landtory.Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NativeFunctionHook\NativeFunctionHook.csproj">
-      <Project>{4268F943-7590-40AD-8BED-72D572EF5B1E}</Project>
-      <Name>NativeFunctionHook</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
