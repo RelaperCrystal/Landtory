@@ -43,60 +43,60 @@ namespace Landtory.Engine.API
             GTAPed = GTAPedT;
         }
         public Ped GTAPed { get; private set; }
-        public bool isInVehicle()
+        public bool IsInVehicle()
         {
             return GTAPed.isInVehicle();
         }
-        public bool isInWater
+        public bool IsInWater
         {
             get
             {
                 return GTAPed.isInWater;
             }
         }
-        public bool isInMeleeCombat
+        public bool IsInMeleeCombat
         {
             get
             {
                 return GTAPed.isInMeleeCombat;
             }
         }
-        public bool isInjured
+        public bool IsInjured
         {
             get
             {
                 return GTAPed.isInjured;
             }
         }
-        public bool isInCombat
+        public bool IsInCombat
         {
             get
             {
                 return GTAPed.isInCombat;
             }
         }
-        public bool isOnFire
+        public bool IsOnFire
         {
             get
             {
                 return GTAPed.isOnFire;
             }
         }
-        public bool isOnScreen
+        public bool IsOnScreen
         {
             get
             {
                 return GTAPed.isOnScreen;
             }
         }
-        public bool isRagdoll
+        public bool IsRagdoll
         {
             get
             {
                 return GTAPed.isRagdoll;
             }
         }
-        public bool isRequiredForMission
+        public bool IsRequiredForMission
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Landtory.Engine.API
                 GTAPed.isRequiredForMission = value;
             }
         }
-        public bool isShooting
+        public bool IsShooting
         {
             get
             {
@@ -115,10 +115,10 @@ namespace Landtory.Engine.API
             }
         }
         /// <summary>
-        /// Please use <seealso cref="isRequiredForMission"/> instead.
+        /// Please use <see cref="IsRequiredForMission"/> instead.
         /// </summary>
-        [Obsolete("Please use isRequiredForMission instead.")]
-        public bool isMissionCharacter
+        [Obsolete("Please use IsRequiredForMission instead.")]
+        public bool IsMissionCharacter
         {
             get
             {
@@ -126,21 +126,9 @@ namespace Landtory.Engine.API
             }
         }
 
-        private bool isArrested_;
+        public bool IsArrested { get; internal set; }
 
-        public bool isArrested
-        {
-            get
-            {
-                return isArrested_;
-            }
-            internal set
-            {
-                isArrested_ = value;
-            }
-        }
-
-        public PersonalInfo info { get; internal set; }
+        public PersonalInfo Info { get; internal set; }
 
         public GTA.value.PedTasks Tasks
         {

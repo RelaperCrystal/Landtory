@@ -90,7 +90,7 @@ namespace Landtory.Engine
 
         public static void ArrestPed(NPed suspect)
         {
-            suspect.isArrested = true;
+            suspect.IsArrested = true;
         }
     }
 }

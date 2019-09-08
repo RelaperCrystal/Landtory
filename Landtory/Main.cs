@@ -14,7 +14,6 @@ namespace Landtory
     class Main : Script
     {
         bool SirenDriver;
-        Checkpoint CheckStation;
         NArrowCheckpoint CheckArrow;
         Engine.API.Logger logger = new Engine.API.Logger();
         string InfoDraw;
@@ -35,10 +34,7 @@ namespace Landtory
         {
             try
             {
-                Vector3 vector = new Vector3();
-                vector.X = 79.2884f;
-                vector.Y = -713.946f;
-                vector.Z = 4.95886f;
+                Vector3 vector = new Vector3(79.2884f, -713.946f, 4.95886f);
                 logger.Log("Initilazing Checkpoint", "Main");
                 CheckArrow = new NArrowCheckpoint(vector, new RGBColor(255, 215, 0));
 

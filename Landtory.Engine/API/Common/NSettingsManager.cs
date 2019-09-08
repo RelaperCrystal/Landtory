@@ -8,6 +8,6 @@ namespace Landtory.Engine.API.Common
 {
     public class NSettingsManager
     {
-        static string PublicStr = File.ReadAllText("Landtory\\LandtorySettings.json");
+        static readonly string PublicStr = File.ReadAllText("Landtory\\LandtorySettings.json");
     }
 }

@@ -22,13 +22,13 @@ namespace Landtory.Engine.API
     {
         public PersonalInfo(Ped target)
         {
-            owner = target;
+            Owner = target;
         }
         public void SetWarrant(Warrant status)
         {
             Wanted = status;
         }
-        public Ped owner { get; private set; }
+        public Ped Owner { get; private set; }
         public LicenseStatus License { get; set; }
         public Warrant Wanted { get; private set; }
         public DateTime DOB { get; set; }

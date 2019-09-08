@@ -16,7 +16,6 @@ namespace Landtory.Process
         bool OnArrest;
         bool OnDuty;
         bool ReadyToProceed;
-        Vehicle car;
         public Arrest()
         {
             logger.Log("Initilazing Arrest", "Arrest");
@@ -35,12 +34,12 @@ namespace Landtory.Process
                 Programming.TransferInfo.Render = "Press ~INPUT_PICKUP~ to arrest the suspect when aiming.";
                 this.SendScriptCommand("2A0A940D-154B-4513-9FB7-7E12DBB4D8B8", "DrawTargetText");
             }
-                if (OnArrest == true && !suspect.GTAPed.Exists() || suspect == null || suspect.isArrested)
+                if (OnArrest == true && !suspect.GTAPed.Exists() || suspect == null || suspect.IsArrested)
                 {
                     OnArrest = false;
                     return;
                 }
-                if (suspect != null && suspect.GTAPed.Exists() && ReadyToProceed == true && OnArrest == true && suspect.isInVehicle() && suspect.GTAPed.CurrentVehicle != Player.Character.CurrentVehicle)
+                if (suspect != null && suspect.GTAPed.Exists() && ReadyToProceed == true && OnArrest == true && suspect.IsInVehicle() && suspect.GTAPed.CurrentVehicle != Player.Character.CurrentVehicle)
                 {
                     suspect.GTAPed.Task.LeaveVehicle();
                     suspect.GTAPed.RelationshipGroup = RelationshipGroup.Player;
@@ -151,6 +150,10 @@ namespace Landtory.Process
             {
                 logger.Log("Starting Arrest");
                 target = Player.GetTargetedPed();
+                if(!OnDuty)
+                {
+                    return;
+                }
                 if (target == null)
                 {
                     logger.Log("Arrest Failed: Null Argument");
@@ -244,7 +247,7 @@ namespace Landtory.Process
         void OnDutyEnabled(Script sender, ObjectCollection parameter)
         {
             logger.Log("Arrest enabled signal received", "Arrest");
-            
+            OnDuty = true;
             this.Interval = 100;
         }
         void ProceedArrestedSuspect(Script sender, ObjectCollection parameter)
@@ -262,7 +265,7 @@ namespace Landtory.Process
                     return;
                 }
                 OnArrest = false;
-                if (suspect.isInVehicle())
+                if (suspect.IsInVehicle())
                 {
                     suspect.GTAPed.Task.LeaveVehicle();
                 }

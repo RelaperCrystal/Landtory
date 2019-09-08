@@ -53,10 +53,7 @@ namespace Landtory.Process
             Player.Character.RelationshipGroup = RelationshipGroup.Cop;
             
 
-            Vector3 CarPosition = new Vector3();
-            CarPosition.X = 85.9519f;
-            CarPosition.Y = -724.686f;
-            CarPosition.Z = 4.99546f;
+            Vector3 CarPosition = new Vector3(85.9519f, -724.686f, 4.99546f);
             Vehicle dutyCar = World.CreateVehicle(Model.BasicPoliceCarModel, CarPosition);
             Blip dutyCarBlip = dutyCar.AttachBlip();
             dutyCarBlip.Icon = BlipIcon.Building_Garage;

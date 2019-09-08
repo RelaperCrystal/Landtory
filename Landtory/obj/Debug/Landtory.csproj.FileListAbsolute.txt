@@ -10,7 +10,6 @@ d:\my documents\visual studio 2010\Projects\Landtory\Landtory\bin\Debug\NativeFu
 d:\my documents\visual studio 2010\Projects\Landtory\Landtory\bin\Debug\NativeFunctionHook.pdb
 D:\Projects\Landtory\Landtory\Landtory\bin\Debug\Landtory.dll
 D:\Projects\Landtory\Landtory\Landtory\bin\Debug\Landtory.pdb
-D:\Projects\Landtory\Landtory\Landtory\bin\Debug\AdvancedHook.dll
 D:\Projects\Landtory\Landtory\Landtory\bin\Debug\Landtory.Engine.dll
 D:\Projects\Landtory\Landtory\Landtory\bin\Debug\NativeFunctionHook.dll
 D:\Projects\Landtory\Landtory\Landtory\bin\Debug\ScriptHookDotNet.dll

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GTA;
-using AdvancedHookManaged;
 using Landtory.Engine.API;
 using NativeFunctionHook;
 using Landtory;
@@ -18,8 +17,8 @@ namespace Landtory.Process
         private NPed Ntarget;
         private Blip targetB;
         private List<Blip> officerblips;
-        private BlipIcon icon = BlipIcon.Misc_Waypoint;
-        private BlipColor color = BlipColor.Cyan;
+        private readonly BlipIcon icon = BlipIcon.Misc_Waypoint;
+        private readonly BlipColor color = BlipColor.Cyan;
         private List<Ped> officers;
         private Player Plyr = Game.LocalPlayer;
         private Timer time = new Timer();
@@ -42,17 +41,17 @@ namespace Landtory.Process
                 target.SetPathfinding(false, true, false);
                 target.Task.FleeFromChar(Plyr.Character, true);
             }
-            time.Tick += new EventHandler(time_Tick);
+            time.Tick += new EventHandler(Time_Tick);
             time.Interval = 100;
         }
 
-        void time_Tick(object sender, EventArgs e)
+        void Time_Tick(object sender, EventArgs e)
         {
             if (target.Exists() == false || target == null)
             {
                 Kill();
             }
-            if (Ntarget.isArrested)
+            if (Ntarget.IsArrested)
             {
                 NGame.PrintSubtitle("Suspect Apprehended!");
                 Kill();

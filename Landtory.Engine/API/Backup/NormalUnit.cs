@@ -28,11 +28,15 @@ namespace Landtory.Engine.API.Backup
         private Vehicle CopCar;
 
         private TaskSequence officerSequence;
+#pragma warning disable IDE0044 // 添加只读修饰符
         private TaskSequence secOfficerSequence;
+#pragma warning restore IDE0044 // 添加只读修饰符
 
         private Timer time;
 
+#pragma warning disable IDE0044 // 添加只读修饰符
         private ENormalUnitState state;
+#pragma warning restore IDE0044 // 添加只读修饰符
         public NormalUnit()
         {
             officer = new NPed(Model.BasicCopModel, Game.LocalPlayer.Character.Position.Around(40.0f));
@@ -47,13 +51,15 @@ namespace Landtory.Engine.API.Backup
             secOfficerSequence = new TaskSequence();
 
             CopCar.SirenActive = true;
-            time = new Timer();
-            time.Interval = 100;
+            time = new Timer
+            {
+                Interval = 100
+            };
             time.Start();
-            time.Tick += time_Tick;
+            time.Tick += Time_Tick;
         }
 
-        void time_Tick(object sender, EventArgs e)
+        void Time_Tick(object sender, EventArgs e)
         {
             switch(state)
             {

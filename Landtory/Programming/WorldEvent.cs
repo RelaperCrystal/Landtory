@@ -9,7 +9,7 @@ namespace Landtory.Programming
     {
         private string _name;
 
-        public string name
+        public string Name
         {
             get
             {
