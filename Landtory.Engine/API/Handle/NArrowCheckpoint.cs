@@ -37,6 +37,9 @@ namespace Landtory.Engine.API.Handle
             };
             time.Tick += DetectPositionAct;
             render.Tick += RenderArrow;
+
+            time.Start();
+            render.Start();
         }
 
         private void RenderArrow(object sender, EventArgs e)
