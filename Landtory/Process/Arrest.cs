@@ -16,6 +16,7 @@ namespace Landtory.Process
         bool OnArrest;
         bool OnDuty;
         bool ReadyToProceed;
+        bool PlayAnim;
         public Arrest()
         {
             logger.Log("Initilazing Arrest", "Arrest");
@@ -34,16 +35,26 @@ namespace Landtory.Process
                 Programming.TransferInfo.Render = "Press ~INPUT_PICKUP~ to arrest the suspect when aiming.";
                 this.SendScriptCommand("2A0A940D-154B-4513-9FB7-7E12DBB4D8B8", "DrawTargetText");
             }
-                if (OnArrest == true && !suspect.GTAPed.Exists() || suspect == null || suspect.IsArrested)
+            if (OnArrest == true && !suspect.GTAPed.Exists() || suspect == null || suspect.IsArrested)
+            {
+                OnArrest = false;
+                return;
+            }
+            if (suspect != null && suspect.GTAPed.Exists() && ReadyToProceed == true && OnArrest == true && suspect.IsInVehicle() && suspect.GTAPed.CurrentVehicle != Player.Character.CurrentVehicle)
+            {
+                suspect.GTAPed.Task.LeaveVehicle();
+                suspect.GTAPed.RelationshipGroup = RelationshipGroup.Player;
+            }
+            if (!suspect.GTAPed.isAliveAndWell)
+            {
+                if(PlayAnim)
                 {
+                    suspect.GTAPed.Delete();
                     OnArrest = false;
-                    return;
+                    PlayAnim = false;
+                    ReadyToProceed = false;
                 }
-                if (suspect != null && suspect.GTAPed.Exists() && ReadyToProceed == true && OnArrest == true && suspect.IsInVehicle() && suspect.GTAPed.CurrentVehicle != Player.Character.CurrentVehicle)
-                {
-                    suspect.GTAPed.Task.LeaveVehicle();
-                    suspect.GTAPed.RelationshipGroup = RelationshipGroup.Player;
-                }
+            }
         }
         #region Abondoned Code 1
         /*
@@ -159,17 +170,39 @@ namespace Landtory.Process
                     logger.Log("Arrest Failed: Null Argument");
                     return;
                 }
-
+            }
+            catch (NullReferenceException)
+            {
+                logger.Log("NullReferenceException during Arrest Check");
+                target = World.GetClosestPed(Game.LocalPlayer.Character.Position, 5.0f);
+            }
+            catch (Exception ex)
+            {
+                NGame.PrintSubtitle(NLanguage.GetLangStr("ArrestException"));
+                logger.Log("Exception During Arrest Check - Checking Null: \n" + ex.ToString(), "Arrest", Logger.LogLevel.Error);
+                return;
+            }
+            try
+            {
                 if (!Exists(target))
                 {
                     logger.Log("Arrest Failed: Suspect does not exist, or not targetting a ped.", "Arrest", Engine.API.Logger.LogLevel.Error);
                     return;
                 }
-                if (target == suspect.GTAPed)
+                if (suspect != null && target == suspect.GTAPed)
                 {
                     logger.Log("Arrest Failed: Suspect aleardy apprehended", "Arrest", Engine.API.Logger.LogLevel.Error);
                     NGame.PrintSubtitle("~r~This suspect is aleardy apprehended.");
                 }
+            }
+            catch(Exception ex)
+            {
+                NGame.PrintSubtitle(NLanguage.GetLangStr("ArrestException"));
+                logger.Log("Exception During Arrest Check - Checking Exists: \n" + ex.ToString(), "Arrest", Logger.LogLevel.Error);
+                return;
+            }
+            try
+            {
                 if (OnArrest == true)
                 {
                     logger.Log("Arrest Failed: Alerady arresting", "Arrest", Engine.API.Logger.LogLevel.Error);
@@ -184,15 +217,19 @@ namespace Landtory.Process
             catch(Exception ex)
             {
                 NGame.PrintSubtitle(NLanguage.GetLangStr("ArrestException"));
-                logger.Log("Exception During Arrest Check: \n"+ex.ToString(), "Arrest", Logger.LogLevel.Error);
+                logger.Log("Exception During Arrest Check - Checking Status: \n" + ex.ToString(), "Arrest", Logger.LogLevel.Error);
                 return;
             }
+            
+            Random random = new Random();
+            int randomed = random.Next(0, 4);
+            
+                logger.Log("Arrest Check Passed, starting arrest", "Arrest");
+                
+                
+            
             try
             {
-                logger.Log("Arrest Check Passed, starting arrest", "Arrest");
-                Random random = new Random();
-                int randomed = random.Next(0, 4);
-                target = Player.GetTargetedPed();
                 if (randomed == 1)
                 {
                     suspect.GTAPed.Weapons.Glock.Ammo = 5000;
@@ -206,13 +243,15 @@ namespace Landtory.Process
                     target.Task.LeaveVehicle();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 NGame.PrintSubtitle(NLanguage.GetLangStr("ArrestException"));
                 logger.Log("Exception During Arrest Init: \n" + ex.ToString(), "Arrest", Logger.LogLevel.Error);
                 return;
             }
-            if(Exists(Player.LastVehicle))
+            target = Player.GetTargetedPed();
+
+            if (Exists(Player.LastVehicle))
             {
                 try
                 {
@@ -223,8 +262,9 @@ namespace Landtory.Process
                     {
                         tasks.AddTask.PlayAnimation(anim, "idle_2_hands_up", 1f);
                         tasks.AddTask.PlayAnimation(anim2, "set_car_bomb", 1f);
-                        tasks.AddTask.EnterVehicle(World.GetClosestVehicle(Player.Character.Position, 10), VehicleSeat.RightRear);
+                        tasks.AddTask.Die();
                         tasks.Perform(target);
+                        PlayAnim = true;
                         ReadyToProceed = true;
                         return;
                     }
@@ -260,7 +300,7 @@ namespace Landtory.Process
                     return;
                 }
                 logger.Log("Proceed arrested suspect signal received", "Arrest");
-                if (OnArrest = false || !Exists(suspect))
+                if (OnArrest = false || !Exists(suspect) || PlayAnim == true || !suspect.GTAPed.isAliveAndWell)
                 {
                     return;
                 }

@@ -41,7 +41,7 @@ namespace Landtory
                 World.UnlockAllIslands();
                 stationBlip = Blip.AddBlip(vector);
                 stationBlip.Icon = BlipIcon.Building_PoliceStation;
-
+                
                 logger.Log("Initilazing Mod Functions", "Main");
                 CheckArrow.CheckpointTriggered += new NArrowCheckpoint.CheckpointTriggeredHandler(Main_Tick);
                 this.BindKey(System.Windows.Forms.Keys.End, SirenSwitchDriver);
