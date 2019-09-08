@@ -1,3 +1,7 @@
 This software provided as-is, with no warranty.
 
-Theres a known issue that may cause arrest script going to crash. Anyone can make this fixed, please give a pull request.
+Theres a known issue that may cause you unable to arrest:
+AIM THE PED TO MAKE PED HANDS UP, SCARING THE PED.
+
+This will cause the ped you are arresting, becoming null.
+Anyone can fix this, give me a pull request.
