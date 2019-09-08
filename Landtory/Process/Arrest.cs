@@ -214,12 +214,6 @@ namespace Landtory.Process
             }
             try
             {
-                if (OnArrest == true)
-                {
-                    logger.Log("Arrest Failed: Alerady arresting", "Arrest", Engine.API.Logger.LogLevel.Error);
-                    NGame.PrintSubtitle(NLanguage.GetLangStr("MultipleSuspectArrestAttmept"));
-                    return;
-                }
                 if (OnDuty == false)
                 {
                     return;
@@ -278,15 +272,14 @@ namespace Landtory.Process
                         tasks.AddTask.Die();
                         tasks.Perform(target);
                         PlayAnim = true;
-                        ReadyToProceed = true;
                         return;
                     }
                     else
                     {
                         tasks.AddTask.HandsUp(5000);
                         tasks.AddTask.EnterVehicle(Programming.TransferInfo.CopCar, VehicleSeat.RightRear);
+                        tasks.AddTask.Die();
                         tasks.Perform(target);
-                        ReadyToProceed = true;
                         return;
                     }
                 }
