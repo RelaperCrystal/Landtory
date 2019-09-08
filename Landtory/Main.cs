@@ -16,6 +16,7 @@ namespace Landtory
         bool SirenDriver;
         NArrowCheckpoint CheckArrow;
         Engine.API.Logger logger = new Engine.API.Logger();
+        Blip stationBlip;
         string InfoDraw;
         public Main()
         {
@@ -37,6 +38,9 @@ namespace Landtory
                 Vector3 vector = new Vector3(79.2884f, -713.946f, 4.95886f);
                 logger.Log("Initilazing Checkpoint", "Main");
                 CheckArrow = new NArrowCheckpoint(vector, new RGBColor(255, 215, 0));
+                World.UnlockAllIslands();
+                stationBlip = Blip.AddBlip(vector);
+                stationBlip.Icon = BlipIcon.Building_PoliceStation;
 
                 logger.Log("Initilazing Mod Functions", "Main");
                 CheckArrow.CheckpointTriggered += new NArrowCheckpoint.CheckpointTriggeredHandler(Main_Tick);
