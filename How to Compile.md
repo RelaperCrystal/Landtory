@@ -6,20 +6,19 @@ In the following list, you will get all the libs and things you require.
 
 These are the library you require.
 
-|          Name          |                       Factor                        |       Included       |
-| :--------------------: | :-------------------------------------------------: | :------------------: |
-|    AdvancedHook.dll    |    Used to make some of Landtory functions work     |     NOT INCLUDED     |
-|  ScriptHookDotNet.dll  |                The basic of Landtory                |       INCLUDED       |
-| NativeFunctionHook.dll | Project of this file are included in the repository | SOURCE CODE INCLUDED |
-|  Newtonsoft.Json.dll   |                Used to make settings                |     NOT INCLUDED     |
+|          Name          |                            Factor                            |   Included   |
+| :--------------------: | :----------------------------------------------------------: | :----------: |
+|  ScriptHookDotNet.dll  |                    The basic of Landtory                     |   INCLUDED   |
+| NativeFunctionHook.dll | Download at [here](http://github.com/RelaperCrystal/NativeFunctionHook) | NOT INCLUDED |
+|  Newtonsoft.Json.dll   |                    Used to make settings                     | NOT INCLUDED |
 
 You also require these tools:
 
-|            Name             |              Factor              | Included | Required |
-| :-------------------------: | :------------------------------: | :------: | :------: |
-| Visual Studio 2013 or later |  IDE to build the Landtory code  |    NO    |   Yes    |
-|       Git for Windows       | The tools to acquire latest code |    NO    |   Yes    |
-|       Github Plug-in        |        Recommended to use        |    NO    |    No    |
+|             Name              |              Factor              | Included | Required |
+| :---------------------------: | :------------------------------: | :------: | :------: |
+|  Visual Studio 2017 or later  |  IDE to build the Landtory code  |    NO    |   Yes    |
+| Git for Windows / TortoiseGit | The tools to acquire latest code |    NO    |   Yes    |
+|        Github Plug-in         |        Recommended to use        |    NO    |    No    |
 
 ## How to build
 
@@ -31,7 +30,7 @@ The command will clone the latest code into your machine.
 
 ![Make sure you are getting these files properly](Res-Files.png)
 
-Then, Place AdvancedHook.dll into the References folder. Open the `Landtory.sln` using Visual Studio 2013 or later. You may notified the Solution version is for 2010, because the project was created by that but moved to 2013 Later, and now using .NET Framework 4.5. **Do not open the Solution using Visual Studio 2010 at any rate. It may broke the code. If you do that, Please re-clone a copy of codes and do not make any commits, push.**
+Then, open the `Landtory.sln` using Visual Studio 2017 or later. You may notified the Solution version is for 2010, because the project was created by that but moved to 2013 Later, then 2017, and now using .NET Framework 4.5. **Do not open the Solution using Visual Studio 2010 / 2013 at any rate. It may broke the code. If you do that, Please re-clone a copy of codes and do not make any commits, push.**
 
 Open Your Visual Studio, click Build in your menu bar. Build the whole solution.
 
