@@ -21,5 +21,7 @@ namespace Landtory.Engine.API.Common
             if (Randomnew == target) return true;
             else return false;
         }
+
+        
     }
 }

@@ -204,6 +204,7 @@ namespace Landtory.Process
                 {
                     logger.Log("Arrest Failed: Suspect aleardy apprehended", "Arrest", Engine.API.Logger.LogLevel.Error);
                     NGame.PrintSubtitle("~r~This suspect is aleardy apprehended.");
+                    return;
                 }
             }
             catch(Exception ex)
@@ -240,6 +241,7 @@ namespace Landtory.Process
                     suspect.GTAPed.Weapons.Glock.Ammo = 5000;
                     suspect.GTAPed.Task.SwapWeapon(Weapon.Handgun_Glock);
                     suspect.GTAPed.Task.FightAgainst(Player.Character, -1);
+                    return;
                 }
                 suspect = new NPed(target);
                 OnArrest = true;
@@ -248,6 +250,7 @@ namespace Landtory.Process
                     Game.LocalPlayer.Character.SayAmbientSpeech("DRAW_GUN");
                     target.Task.LeaveVehicle();
                 }
+                
             }
             catch (Exception ex)
             {
