@@ -19,6 +19,9 @@ namespace Landtory.Process
         bool OnDuty;
         bool ReadyToProceed;
         bool PlayAnim;
+        bool preformed = false;
+        bool settingInVehicle = false;
+        bool proceeded = false;
         public Arrest()
         {
             logger.Log("Initilazing Arrest", "Arrest");
@@ -269,20 +272,7 @@ namespace Landtory.Process
                     Game.LocalPlayer.Character.SayAmbientSpeech("ARREST_PLAYER");
                     AnimationSet anim = new AnimationSet("busted");
                     AnimationSet anim2 = new AnimationSet("car_bomb");
-                    NGame.RequestModel(Model.CurrentCopModel.Hash);
-                    Model model = Model.BasicPoliceCarModel;
-                    NGame.RequestModel(model.Hash);
-                    Vector3 vector = World.GetNextPositionOnStreet(Player.Character.Position.Around(50f));
-                    Pointer pointer1 = typeof(Vehicle);
-                    Pointer ped1 = typeof(Ped);
-                    Pointer ped2 = typeof(Ped);
-                    Function.Call("CREATE_EMERGENCY_SERVICES_CAR_RETURN_DRIVER", new Parameter[] {
-                        model.Hash, vector.X, vector.Y, vector.Z,
-                        pointer1, ped1, ped2
-                    });
-                    Vehicle vehicle = (Vehicle)pointer1.Value;
-                    Ped pedInstance1 = (Ped)ped1.Value;
-                    Ped pedInstance2 = (Ped)ped2.Value;
+                    
 
                     TaskSequence tasks = new TaskSequence();
                     if (anim != null && anim2 != null)
@@ -303,17 +293,64 @@ namespace Landtory.Process
                         
                     }
 
+                    Model model = Model.BasicPoliceCarModel;
+                    NGame.RequestModel(model.Hash);
+                    Vector3 vector = World.GetNextPositionOnStreet(Player.Character.Position.Around(50f));
+                    Vehicle vehicle = World.CreateVehicle(model, vector);
+                    Ped pedInstance1 = World.CreatePed(Model.CurrentCopModel, vector.Around(5.0f));
+                    Ped pedInstance2 = World.CreatePed(Model.CurrentCopModel, vector.Around(5.0f));
+
+                    vehicle.isRequiredForMission = true;
+                    pedInstance1.isRequiredForMission = true;
+                    pedInstance2.isRequiredForMission = true;
+
+                    if (vehicle == null || pedInstance1 == null || pedInstance2 == null)
+                    {
+                        logger.Log("Ped will be killed because prisoner transport is not available");
+                        return;
+                    }
+
                     vehicle.SirenActive = true;
+                    Blip blip = vehicle.AttachBlip();
+                    blip.Color = BlipColor.Cyan;
+                    blip.Friendly = true;
+                    blip.Name = "Prisoner Transport";
+
                     TaskSequence driverTasks = new TaskSequence();
                     driverTasks.AddTask.DriveTo(target, 30, false);
                     driverTasks.AddTask.LeaveVehicle();
                     driverTasks.AddTask.AimAt(target, -1);
+                    driverTasks.Perform(pedInstance1);
 
-                    bool preformed = false;
+                    
                     while (!pedInstance1.isSittingInVehicle(vehicle) && !preformed)
                     {
                         preformed = true;
                         Function.Call("REVIVE_INJURED_PED", target);
+                        target.Task.EnterVehicle(vehicle, VehicleSeat.LeftRear);
+                    }
+
+                    while (target.isSittingInVehicle(vehicle) && settingInVehicle == false)
+                    {
+                        settingInVehicle = true;
+                        pedInstance1.Task.EnterVehicle(vehicle, VehicleSeat.Driver);
+                    }
+
+                    while (target.isSittingInVehicle(vehicle) && settingInVehicle && pedInstance1.isSittingInVehicle(vehicle) && !proceeded)
+                    {
+                        proceeded = true;
+                        vehicle.SirenActive = false;
+                        pedInstance1.Task.CruiseWithVehicle(vehicle, 15, true);
+                        vehicle.DoorLock = DoorLock.ImpossibleToOpen;
+                        vehicle.NoLongerNeeded();
+                        target.NoLongerNeeded();
+                        pedInstance1.NoLongerNeeded();
+                        pedInstance2.NoLongerNeeded();
+                        blip.Delete();
+                        vehicle = null;
+                        target = null;
+                        pedInstance1 = null;
+                        pedInstance2 = null;
                     }
                 }
                 catch(Exception ex)
