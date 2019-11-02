@@ -6,6 +6,8 @@ using GTA;
 using NativeFunctionHook;
 using Landtory.Engine.API;
 using Landtory.Engine.API.Common;
+using GTA.Native;
+using NativeFunctionHook.value;
 
 namespace Landtory.Process
 {
@@ -267,6 +269,21 @@ namespace Landtory.Process
                     Game.LocalPlayer.Character.SayAmbientSpeech("ARREST_PLAYER");
                     AnimationSet anim = new AnimationSet("busted");
                     AnimationSet anim2 = new AnimationSet("car_bomb");
+                    NGame.RequestModel(Model.CurrentCopModel.Hash);
+                    Model model = Model.BasicPoliceCarModel;
+                    NGame.RequestModel(model.Hash);
+                    Vector3 vector = World.GetNextPositionOnStreet(Player.Character.Position.Around(50f));
+                    Pointer pointer1 = typeof(Vehicle);
+                    Pointer ped1 = typeof(Ped);
+                    Pointer ped2 = typeof(Ped);
+                    Function.Call("CREATE_EMERGENCY_SERVICES_CAR_RETURN_DRIVER", new Parameter[] {
+                        model.Hash, vector.X, vector.Y, vector.Z,
+                        pointer1, ped1, ped2
+                    });
+                    Vehicle vehicle = (Vehicle)pointer1.Value;
+                    Ped pedInstance1 = (Ped)ped1.Value;
+                    Ped pedInstance2 = (Ped)ped2.Value;
+
                     TaskSequence tasks = new TaskSequence();
                     if (anim != null && anim2 != null)
                     {
@@ -275,7 +292,7 @@ namespace Landtory.Process
                         tasks.AddTask.Die();
                         tasks.Perform(target);
                         PlayAnim = true;
-                        return;
+                        
                     }
                     else
                     {
@@ -283,7 +300,20 @@ namespace Landtory.Process
                         tasks.AddTask.EnterVehicle(Programming.TransferInfo.CopCar, VehicleSeat.RightRear);
                         tasks.AddTask.Die();
                         tasks.Perform(target);
-                        return;
+                        
+                    }
+
+                    vehicle.SirenActive = true;
+                    TaskSequence driverTasks = new TaskSequence();
+                    driverTasks.AddTask.DriveTo(target, 30, false);
+                    driverTasks.AddTask.LeaveVehicle();
+                    driverTasks.AddTask.AimAt(target, -1);
+
+                    bool preformed = false;
+                    while (!pedInstance1.isSittingInVehicle(vehicle) && !preformed)
+                    {
+                        preformed = true;
+                        Function.Call("REVIVE_INJURED_PED", target);
                     }
                 }
                 catch(Exception ex)

@@ -8,6 +8,7 @@ using NativeFunctionHook;
 using Landtory.Engine.API.Common;
 using Landtory.Engine.API.Handle;
 using NativeFunctionHook.value;
+using Landtory.Engine.Plugin;
 
 namespace Landtory
 {
@@ -49,6 +50,12 @@ namespace Landtory
                 InfoDraw = NLanguage.GetLangStr("OnDuty");
                 Wait(3000);
                 InfoDraw = NLanguage.GetLangStr("NameDraw");
+
+                Controller.LoadAllPlugins();
+                if(Controller.plugins.Count != 0)
+                {
+                    Controller.ExecuteAllPluginMethod("OnInitialized");
+                }
             }
             catch (Exception ex)
             {

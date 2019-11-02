@@ -66,6 +66,8 @@
       <DependentUpon>Language.resx</DependentUpon>
     </Compile>
     <Compile Include="PedOpreation.cs" />
+    <Compile Include="Plugin\Controller.cs" />
+    <Compile Include="Plugin\Interfaces\IPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
